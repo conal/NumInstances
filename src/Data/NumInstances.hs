@@ -1,5 +1,6 @@
 {-# LANGUAGE MultiParamTypeClasses, FlexibleInstances #-}
-{-# OPTIONS_GHC -fno-warn-orphans #-}
+{-# LANGUAGE StandaloneDeriving, ScopedTypeVariables #-}
+{-# OPTIONS_GHC -Wall -fno-warn-orphans #-}
 ----------------------------------------------------------------------
 -- |
 -- Module      :  Data.NumInstances
@@ -69,6 +70,9 @@ instance Floating b => Floating (a->b) where
 
 lift2 :: (a->u) -> (b->v) -> (a,b) -> (u,v)
 lift2 f g (a,b) = (f a, g b)
+
+noPair :: String -> a
+noPair = noOv "pair"
 
 -- Equivalently, lift2 = (***)
 
@@ -172,3 +176,79 @@ instance (Floating a, Floating b, Floating c, Floating d)
   asinh = lift4 asinh asinh asinh asinh
   acosh = lift4 acosh acosh acosh acosh
   atanh = lift4 atanh atanh atanh atanh
+
+
+{--------------------------------------------------------------------
+    Some experiments in Enum and Integral instances for tuples
+--------------------------------------------------------------------}
+
+{-
+
+-- Integral needs Enum
+
+instance (Enum a, Enum b, Bounded b) => Enum (a,b) where
+  toEnum = noPair "toEnum"
+  fromEnum = noPair "fromEnum"
+  -- enumerate consistently with Ord
+  enumFromTo (alo,blo) (ahi,bhi) = 
+       [ (alo,b) | b <- [blo .. maxBound] ]
+    ++ [ (a  ,b) | a <- [succ alo .. pred ahi], b <- [minBound .. maxBound] ]
+    ++ [ (ahi,b) | b <- [minBound .. bhi] ]
+  -- To do: replace enumFromTo def with an enumFromThenTo def
+
+-- deriving instance (Enum a, Enum b) => Enum (a,b)
+-- 
+--     The data constructors of `(,)' are not all in scope
+--       so you cannot derive an instance for it
+
+-- To do: toEnum and fromEnum
+
+{-
+-- Test:
+
+data Foo = A | B | C | D deriving (Enum,Bounded,Show)
+
+t1 :: [(Foo,Foo)]
+t1 = [(B,C) .. (C,C)]
+-}
+
+instance (Real a, Real b) => Real (a,b) where
+  toRational = noPair "toRational"
+
+
+instance (Integral a, Integral b, Bounded b) => Integral (a,b) where
+--   (a,b) `quotRem` (a',b') = ((qa,qb),(ra,rb))
+--     where
+--       (qa,ra) = a `quotRem` a'
+--       (qb,rb) = b `quotRem` b'
+  (a,b) `quotRem` (a',b') = transpose (a `quotRem` a' , b `quotRem` b')
+    where
+      transpose ((w,x),(y,z)) = ((w,y),(x,z)) -- to-do: pretty point-free
+  toInteger (a , b::b) = toInteger a * widthB + toInteger b
+   where
+     widthB = toInteger (maxBound :: b) - toInteger (minBound :: b)
+
+{-
+t2 :: ((Int,Int),(Int,Int))
+t2 = (7,8) `quotRem` (2,3)
+
+t3 :: (Int,Int)
+t3 = (7,8) `quot` (2,3)
+
+t4 :: (Int,Int)
+t4 = (7,8) `rem` (2,3)
+-}
+
+{-
+  (a,b) `quot` (a',b') = (a `quot` a', b `quot` b')
+
+
+  rem           = liftA2 rem
+  div           = liftA2 div
+  mod           = liftA2 mod
+  toInteger     = noOv "toInteger"
+  x `quotRem` y = (x `quot` y, x `rem` y)
+  x `divMod`  y = (x `div`  y, x `mod` y)
+-}
+
+-}
