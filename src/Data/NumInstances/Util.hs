@@ -1,17 +1,20 @@
 {-# OPTIONS_GHC -Wall -fno-warn-orphans #-}
 ----------------------------------------------------------------------
 -- |
--- Module      :  Data.NumInstances
+-- Module      :  Data.NumInstances.Util
 -- Copyright   :  (c) Conal Elliott 2008
 -- License     :  BSD3
--- 
+--
 -- Maintainer  :  conal@conal.net
 -- Stability   :  experimental
--- 
--- Number class instances for functions and tuples
+--
+-- Utilities for number class instances for functions and tuples
 ----------------------------------------------------------------------
 
-module Data.NumInstances () where
+module Data.NumInstances.Util (noOv, noFun) where
 
-import Data.NumInstances.Function ()
-import Data.NumInstances.Tuple ()
+noOv :: String -> String -> a
+noOv ty meth = error $ meth ++ ": No overloading for " ++ ty
+
+noFun :: String -> a
+noFun = noOv "function"
