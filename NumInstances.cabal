@@ -1,6 +1,10 @@
 Name:                NumInstances
 Version:             1.1
 Synopsis:            Instances of numeric classes for functions and tuples
+Description:         Instances of numeric classes for functions and tuples.
+                     Import "Data.NumInstances" to get all the instances.
+                     If you want only function or only tuple instances, import
+                     "Data.NumInstances.Function" or "Data.NumInstances.Tuple".
 License:             BSD3
 License-file:        LICENSE
 Author:              Conal Elliott
@@ -12,10 +16,10 @@ Package-Url:         http://github.com/conal/NumInstances
 
 Library
   hs-Source-Dirs:      src
-  Exposed-modules:     Data.NumInstances
+  Exposed-modules:     Data.NumInstances, Data.NumInstances.Function, Data.NumInstances.Tuple
   Build-Depends:       base<5
-  -- Other-modules:       
-  
+  Other-modules:       Data.NumInstances.Util
+
 -- This module used to be part of vector-space
 
  ghc-prof-options:    -prof -auto-all 
