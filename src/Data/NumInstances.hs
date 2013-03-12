@@ -71,8 +71,8 @@ instance Floating b => Floating (a->b) where
 lift2 :: (a->u) -> (b->v) -> (a,b) -> (u,v)
 lift2 f g (a,b) = (f a, g b)
 
-noPair :: String -> a
-noPair = noOv "pair"
+-- noPair :: String -> a
+-- noPair = noOv "pair"
 
 -- Equivalently, lift2 = (***)
 

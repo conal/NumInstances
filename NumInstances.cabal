@@ -1,5 +1,5 @@
 Name:                NumInstances
-Version:             1.0
+Version:             1.1
 Synopsis:            Instances of numeric classes for functions and tuples
 License:             BSD3
 License-file:        LICENSE
@@ -17,3 +17,5 @@ Library
   -- Other-modules:       
   
 -- This module used to be part of vector-space
+
+ ghc-prof-options:    -prof -auto-all 
