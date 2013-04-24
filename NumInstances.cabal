@@ -12,13 +12,17 @@ Maintainer:          conal@conal.net
 Category:            Data
 Build-type:          Simple
 Cabal-version:       >=1.8
-Package-Url:         http://github.com/conal/NumInstances
+Homepage:            https://github.com/conal/NumInstances
+
+Source-Repository head
+  type:     git
+  location: git://github.com/conal/NumInstances.git
 
 Library
   hs-Source-Dirs:      src
   Exposed-modules:     Data.NumInstances, Data.NumInstances.Function, Data.NumInstances.Tuple
   Build-Depends:       base<5
-  Other-modules:       Data.NumInstances.Util
+  Other-modules:       Data.NumInstances.Util, Data.NumInstances.PreRequisites
 
   if impl(ghc < 7.4)
     hs-Source-Dirs:    src-draconian-Num
