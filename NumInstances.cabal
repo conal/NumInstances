@@ -1,5 +1,5 @@
 Name:                NumInstances
-Version:             1.2
+Version:             1.3
 Synopsis:            Instances of numeric classes for functions and tuples
 Description:         Instances of numeric classes for functions and tuples.
                      Import "Data.NumInstances" to get all the instances.
@@ -11,7 +11,7 @@ Author:              Conal Elliott
 Maintainer:          conal@conal.net
 Category:            Data
 Build-type:          Simple
-Cabal-version:       >=1.2
+Cabal-version:       >=1.8
 Package-Url:         http://github.com/conal/NumInstances
 
 Library
@@ -19,6 +19,11 @@ Library
   Exposed-modules:     Data.NumInstances, Data.NumInstances.Function, Data.NumInstances.Tuple
   Build-Depends:       base<5
   Other-modules:       Data.NumInstances.Util
+
+  if impl(ghc < 7.4)
+    hs-Source-Dirs:    src-draconian-Num
+  else
+    hs-Source-Dirs:    src-relaxed-Num
 
 -- This module used to be part of vector-space
 
