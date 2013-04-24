@@ -13,6 +13,8 @@ Category:            Data
 Build-type:          Simple
 Cabal-version:       >=1.8
 Homepage:            https://github.com/conal/NumInstances
+Extra-Source-Files:  src-draconian-Num/Data/NumInstances/PreRequisites.hs,
+                     src-relaxed-Num/Data/NumInstances/PreRequisites.hs
 
 Source-Repository head
   type:     git
