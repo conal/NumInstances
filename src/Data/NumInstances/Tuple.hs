@@ -118,8 +118,112 @@ instance (Floating a, Floating b, Floating c, Floating d)
   asinh = lift4 asinh asinh asinh asinh
   acosh = lift4 acosh acosh acosh acosh
   atanh = lift4 atanh atanh atanh atanh
+  
+lift5 :: (a->u) -> (b->v) -> (c->w) -> (d->x) -> (e->y)
+      -> (a,b,c,d,e) -> (u,v,w,x,y)
+lift5 f g h k j (a,b,c,d,e) = (f a, g b, h c, k d, j e)
 
+instance (Num a, Num b, Num c, Num d, Num e) => Num (a,b,c,d,e) where
+  fromInteger n = (fromInteger n, fromInteger n, fromInteger n, fromInteger n, fromInteger n)
+  (a,b,c,d,e) + (a',b',c',d',e') = (a+a',b+b',c+c',d+d',e+e')
+  (a,b,c,d,e) - (a',b',c',d',e') = (a-a',b-b',c-c',d-d',e-e')
+  (a,b,c,d,e) * (a',b',c',d',e') = (a*a',b*b',c*c',d*d',e*e')
+  negate = lift5 negate negate negate negate negate
+  abs    = lift5 abs abs abs abs abs
+  signum = lift5 signum signum signum signum signum
+  
+ instance (Fractional a, Fractional b, Fractional c, Fractional d, Fractional e)
+    => Fractional (a,b,c,d,e) where
+  fromRational x = (fromRational x, fromRational x, fromRational x, fromRational x, fromRational x)
+  recip = lift5 recip recip recip recip recip
+  
+instance (Floating a, Floating b, Floating c, Floating d, Floating e)
+    => Floating (a,b,c,d,e) where
+  pi    = (pi,pi,pi,pi,pi)
+  exp   = lift5 exp exp exp exp exp
+  log   = lift5 log log log log log
+  sqrt  = lift5 sqrt sqrt sqrt sqrt sqrt
+  sin   = lift5 sin sin sin sin sin
+  cos   = lift5 cos cos cos cos cos
+  sinh  = lift5 sinh sinh sinh sinh sinh
+  cosh  = lift5 cosh cosh cosh cosh cosh
+  asin  = lift5 asin asin asin asin asin
+  acos  = lift5 acos acos acos acos acos
+  atan  = lift5 atan atan atan atan atan
+  asinh = lift5 asinh asinh asinh asinh asinh
+  acosh = lift5 acosh acosh acosh acosh acosh
+  atanh = lift5 atanh atanh atanh atanh atanh
 
+lift6 :: (a->u) -> (b->v) -> (c->w) -> (d->x) -> (e->y) -> (f->z)
+      -> (a,b,c,d,e,f) -> (u,v,w,x,y,z)
+lift6 f g h k j m (a,b,c,d,e,f) = (f a, g b, h c, k d, j e, m f)
+
+instance (Num a, Num b, Num c, Num d, Num e, Num f) => Num (a,b,c,d,e,f) where
+  fromInteger n = (fromInteger n, fromInteger n, fromInteger n, fromInteger n, fromInteger n, fromInteger n)
+  (a,b,c,d,e,f) + (a',b',c',d',e',f') = (a+a',b+b',c+c',d+d',e+e',f+f')
+  (a,b,c,d,e,f) - (a',b',c',d',e',f') = (a-a',b-b',c-c',d-d',e-e',f-f')
+  (a,b,c,d,e,f) * (a',b',c',d',e',f') = (a*a',b*b',c*c',d*d',e*e',f*f')
+  negate = lift6 negate negate negate negate negate negate
+  abs    = lift6 abs abs abs abs abs abs
+  signum = lift6 signum signum signum signum signum signum
+  
+ instance (Fractional a, Fractional b, Fractional c, Fractional d, Fractional e, Fractional f)
+    => Fractional (a,b,c,d,e,f) where
+  fromRational x = (fromRational x, fromRational x, fromRational x, fromRational x, fromRational x, fromRational x)
+  recip = lift6 recip recip recip recip recip recip
+  
+instance (Floating a, Floating b, Floating c, Floating d, Floating e, Floating f)
+    => Floating (a,b,c,d,e,f) where
+  pi    = (pi,pi,pi,pi,pi,pi)
+  exp   = lift6 exp exp exp exp exp exp
+  log   = lift6 log log log log log log
+  sqrt  = lift6 sqrt sqrt sqrt sqrt sqrt sqrt
+  sin   = lift6 sin sin sin sin sin sin
+  cos   = lift6 cos cos cos cos cos cos
+  sinh  = lift6 sinh sinh sinh sinh sinh sinh
+  cosh  = lift6 cosh cosh cosh cosh cosh cosh
+  asin  = lift6 asin asin asin asin asin asin
+  acos  = lift6 acos acos acos acos acos acos
+  atan  = lift6 atan atan atan atan atan atan
+  asinh = lift6 asinh asinh asinh asinh asinh asinh
+  acosh = lift6 acosh acosh acosh acosh acosh acosh
+  atanh = lift6 atanh atanh atanh atanh atanh atanh
+  
+lift7 :: (a->u) -> (b->v) -> (c->w) -> (d->x) -> (e->y) -> (f->t) -> (g->z)
+      -> (a,b,c,d,e,f,g) -> (u,v,w,x,y,t,z)
+lift7 f g h k j l m (a,b,c,d,e,f,g) = (f a, g b, h c, k d, j e, l f, m g)
+
+instance (Num a, Num b, Num c, Num d, Num e, Num f, Num g) => Num (a,b,c,d,e,f,g) where
+  fromInteger n = (fromInteger n, fromInteger n, fromInteger n, fromInteger n, fromInteger n, fromInteger n, fromInteger n)
+  (a,b,c,d,e,f,g) + (a',b',c',d',e',f',g') = (a+a',b+b',c+c',d+d',e+e',f+f',g+g')
+  (a,b,c,d,e,f,g) - (a',b',c',d',e',f',g') = (a-a',b-b',c-c',d-d',e-e',f-f',g-g')
+  (a,b,c,d,e,f,g) * (a',b',c',d',e',f',g') = (a*a',b*b',c*c',d*d',e*e',f*f',g*g')
+  negate = lift5 negate negate negate negate negate negate negate
+  abs    = lift5 abs abs abs abs abs abs abs
+  signum = lift5 signum signum signum signum signum signum signum
+  
+ instance (Fractional a, Fractional b, Fractional c, Fractional d, Fractional e, Fractional f, Fractional g)
+    => Fractional (a,b,c,d,e,f,g) where
+  fromRational x = (fromRational x, fromRational x, fromRational x, fromRational x, fromRational x, fromRational x, fromRational x)
+  recip = lift7 recip recip recip recip recip recip recip
+  
+instance (Floating a, Floating b, Floating c, Floating d, Floating e, Floating f, Floating g)
+    => Floating (a,b,c,d,e,f,g) where
+  pi    = (pi,pi,pi,pi,pi,pi,pi)
+  exp   = lift7 exp exp exp exp exp exp exp 
+  log   = lift7 log log log log log log log
+  sqrt  = lift7 sqrt sqrt sqrt sqrt sqrt sqrt sqrt
+  sin   = lift7 sin sin sin sin sin sin sin
+  cos   = lift7 cos cos cos cos cos cos cos
+  sinh  = lift7 sinh sinh sinh sinh sinh sinh sinh
+  cosh  = lift7 cosh cosh cosh cosh cosh cosh cosh
+  asin  = lift7 asin asin asin asin asin asin asin
+  acos  = lift7 acos acos acos acos acos acos acos
+  atan  = lift7 atan atan atan atan atan atan atan
+  asinh = lift7 asinh asinh asinh asinh asinh asinh asinh
+  acosh = lift7 acosh acosh acosh acosh acosh acosh acosh
+  atanh = lift7 atanh atanh atanh atanh atanh atanh atanh
+  
 {--------------------------------------------------------------------
     Some experiments in Enum and Integral instances for tuples
 --------------------------------------------------------------------}
