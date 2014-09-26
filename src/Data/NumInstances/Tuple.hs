@@ -13,8 +13,10 @@
 
 module Data.NumInstances.Tuple () where
 
+-- TODO: Replace with a Template Haskell definition and applications
+
 lift2 :: (a->u) -> (b->v) -> (a,b) -> (u,v)
-lift2 f g (a,b) = (f a, g b)
+lift2 fa fb (a,b) = (fa a, fb b)
 
 -- Equivalently, lift2 = (***)
 
@@ -61,9 +63,9 @@ instance (Fractional a, Fractional b, Fractional c)
   fromRational x = (fromRational x, fromRational x, fromRational x)
   recip = lift3 recip recip recip
 
-
-lift3 :: (a->u) -> (b->v) -> (c->w) -> (a,b,c) -> (u,v,w)
-lift3 f g h (a,b,c) = (f a, g b, h c)
+lift3 :: (a->u) -> (b->v) -> (c->w)
+      -> (a,b,c) -> (u,v,w)
+lift3 fa fb fc (a,b,c) = (fa a, fb b, fc c)
 
 instance (Floating a, Floating b, Floating c)
     => Floating (a,b,c) where
@@ -82,11 +84,9 @@ instance (Floating a, Floating b, Floating c)
   acosh = lift3 acosh acosh acosh
   atanh = lift3 atanh atanh atanh
 
-
-
 lift4 :: (a->u) -> (b->v) -> (c->w) -> (d->x)
       -> (a,b,c,d) -> (u,v,w,x)
-lift4 f g h k (a,b,c,d) = (f a, g b, h c, k d)
+lift4 fa fb fc fd (a,b,c,d) = (fa a, fb b, fc c, fd d)
 
 instance (Num a, Num b, Num c, Num d) => Num (a,b,c,d) where
   fromInteger n = (fromInteger n, fromInteger n, fromInteger n, fromInteger n)
@@ -118,10 +118,11 @@ instance (Floating a, Floating b, Floating c, Floating d)
   asinh = lift4 asinh asinh asinh asinh
   acosh = lift4 acosh acosh acosh acosh
   atanh = lift4 atanh atanh atanh atanh
-  
+
 lift5 :: (a->u) -> (b->v) -> (c->w) -> (d->x) -> (e->y)
       -> (a,b,c,d,e) -> (u,v,w,x,y)
-lift5 f g h k j (a,b,c,d,e) = (f a, g b, h c, k d, j e)
+lift5 fa fb fc fd fe (a,b,c,d,e) =
+  (fa a, fb b, fc c, fd d, fe e)
 
 instance (Num a, Num b, Num c, Num d, Num e) => Num (a,b,c,d,e) where
   fromInteger n = (fromInteger n, fromInteger n, fromInteger n, fromInteger n, fromInteger n)
@@ -131,12 +132,12 @@ instance (Num a, Num b, Num c, Num d, Num e) => Num (a,b,c,d,e) where
   negate = lift5 negate negate negate negate negate
   abs    = lift5 abs abs abs abs abs
   signum = lift5 signum signum signum signum signum
-  
- instance (Fractional a, Fractional b, Fractional c, Fractional d, Fractional e)
+
+instance (Fractional a, Fractional b, Fractional c, Fractional d, Fractional e)
     => Fractional (a,b,c,d,e) where
   fromRational x = (fromRational x, fromRational x, fromRational x, fromRational x, fromRational x)
   recip = lift5 recip recip recip recip recip
-  
+
 instance (Floating a, Floating b, Floating c, Floating d, Floating e)
     => Floating (a,b,c,d,e) where
   pi    = (pi,pi,pi,pi,pi)
@@ -154,9 +155,10 @@ instance (Floating a, Floating b, Floating c, Floating d, Floating e)
   acosh = lift5 acosh acosh acosh acosh acosh
   atanh = lift5 atanh atanh atanh atanh atanh
 
-lift6 :: (a->u) -> (b->v) -> (c->w) -> (d->x) -> (e->y) -> (f->z)
-      -> (a,b,c,d,e,f) -> (u,v,w,x,y,z)
-lift6 f g h k j m (a,b,c,d,e,f) = (f a, g b, h c, k d, j e, m f)
+lift6 :: (a->u) -> (b->v) -> (c->w) -> (d->x) -> (e->y) -> (f->t)
+      -> (a,b,c,d,e,f) -> (u,v,w,x,y,t)
+lift6 fa fb fc fd fe ff (a,b,c,d,e,f) =
+  (fa a, fb b, fc c, fd d, fe e, ff f)
 
 instance (Num a, Num b, Num c, Num d, Num e, Num f) => Num (a,b,c,d,e,f) where
   fromInteger n = (fromInteger n, fromInteger n, fromInteger n, fromInteger n, fromInteger n, fromInteger n)
@@ -166,12 +168,12 @@ instance (Num a, Num b, Num c, Num d, Num e, Num f) => Num (a,b,c,d,e,f) where
   negate = lift6 negate negate negate negate negate negate
   abs    = lift6 abs abs abs abs abs abs
   signum = lift6 signum signum signum signum signum signum
-  
- instance (Fractional a, Fractional b, Fractional c, Fractional d, Fractional e, Fractional f)
+
+instance (Fractional a, Fractional b, Fractional c, Fractional d, Fractional e, Fractional f)
     => Fractional (a,b,c,d,e,f) where
   fromRational x = (fromRational x, fromRational x, fromRational x, fromRational x, fromRational x, fromRational x)
   recip = lift6 recip recip recip recip recip recip
-  
+
 instance (Floating a, Floating b, Floating c, Floating d, Floating e, Floating f)
     => Floating (a,b,c,d,e,f) where
   pi    = (pi,pi,pi,pi,pi,pi)
@@ -188,29 +190,30 @@ instance (Floating a, Floating b, Floating c, Floating d, Floating e, Floating f
   asinh = lift6 asinh asinh asinh asinh asinh asinh
   acosh = lift6 acosh acosh acosh acosh acosh acosh
   atanh = lift6 atanh atanh atanh atanh atanh atanh
-  
+
 lift7 :: (a->u) -> (b->v) -> (c->w) -> (d->x) -> (e->y) -> (f->t) -> (g->z)
       -> (a,b,c,d,e,f,g) -> (u,v,w,x,y,t,z)
-lift7 f g h k j l m (a,b,c,d,e,f,g) = (f a, g b, h c, k d, j e, l f, m g)
+lift7 fa fb fc fd fe ff fg (a,b,c,d,e,f,g) =
+  (fa a, fb b, fc c, fd d, fe e, ff f, fg g)
 
 instance (Num a, Num b, Num c, Num d, Num e, Num f, Num g) => Num (a,b,c,d,e,f,g) where
   fromInteger n = (fromInteger n, fromInteger n, fromInteger n, fromInteger n, fromInteger n, fromInteger n, fromInteger n)
   (a,b,c,d,e,f,g) + (a',b',c',d',e',f',g') = (a+a',b+b',c+c',d+d',e+e',f+f',g+g')
   (a,b,c,d,e,f,g) - (a',b',c',d',e',f',g') = (a-a',b-b',c-c',d-d',e-e',f-f',g-g')
   (a,b,c,d,e,f,g) * (a',b',c',d',e',f',g') = (a*a',b*b',c*c',d*d',e*e',f*f',g*g')
-  negate = lift5 negate negate negate negate negate negate negate
-  abs    = lift5 abs abs abs abs abs abs abs
-  signum = lift5 signum signum signum signum signum signum signum
-  
- instance (Fractional a, Fractional b, Fractional c, Fractional d, Fractional e, Fractional f, Fractional g)
+  negate = lift7 negate negate negate negate negate negate negate
+  abs    = lift7 abs abs abs abs abs abs abs
+  signum = lift7 signum signum signum signum signum signum signum
+
+instance (Fractional a, Fractional b, Fractional c, Fractional d, Fractional e, Fractional f, Fractional g)
     => Fractional (a,b,c,d,e,f,g) where
   fromRational x = (fromRational x, fromRational x, fromRational x, fromRational x, fromRational x, fromRational x, fromRational x)
   recip = lift7 recip recip recip recip recip recip recip
-  
+
 instance (Floating a, Floating b, Floating c, Floating d, Floating e, Floating f, Floating g)
     => Floating (a,b,c,d,e,f,g) where
   pi    = (pi,pi,pi,pi,pi,pi,pi)
-  exp   = lift7 exp exp exp exp exp exp exp 
+  exp   = lift7 exp exp exp exp exp exp exp
   log   = lift7 log log log log log log log
   sqrt  = lift7 sqrt sqrt sqrt sqrt sqrt sqrt sqrt
   sin   = lift7 sin sin sin sin sin sin sin
@@ -223,7 +226,7 @@ instance (Floating a, Floating b, Floating c, Floating d, Floating e, Floating f
   asinh = lift7 asinh asinh asinh asinh asinh asinh asinh
   acosh = lift7 acosh acosh acosh acosh acosh acosh acosh
   atanh = lift7 atanh atanh atanh atanh atanh atanh atanh
-  
+
 {--------------------------------------------------------------------
     Some experiments in Enum and Integral instances for tuples
 --------------------------------------------------------------------}

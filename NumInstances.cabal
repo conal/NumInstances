@@ -1,5 +1,5 @@
 Name:                NumInstances
-Version:             1.3
+Version:             1.4
 Synopsis:            Instances of numeric classes for functions and tuples
 Description:         Instances of numeric classes for functions and tuples.
                      Import "Data.NumInstances" to get all the instances.
